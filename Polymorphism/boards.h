@@ -1,34 +1,47 @@
 namespace Ads
 {
-	enum Medium{Plastic =1,Wooden =2,Metal =5};
 
-	class Signboard{
-		public:
-			virtual double Area() const;
-			double Price() const;
-			virtual ~Signboard();
+	enum Medium {Plastic = 1, Wooden = 2, Metal = 5};
 
-		protected:
-			Medium material;
+	class Signboard
+	{
+	public:
+		
+		virtual double Area() const = 0;
+		double Price() const;
+		virtual ~Signboard() {}
+		Signboard(int id){}
+	protected: 
+		Medium material;
 	};
 
-	class Rectangularboard : public Signboard
+	class Wasteful
 	{
-		public:
-			Rectangularboard(float w,float h,Medium make);
-			double Area() const;
-		private:
-			float length, breadth;
+	public:
+		virtual double Extra() const = 0;
+		virtual ~Wasteful() {}
+	protected:
+		int layers;
 	};
 
-	class CircularBoard : public Signboard
+	class RectangularBoard : public virtual Signboard
 	{
-		public: 
-			CircularBoard(float diameter,Medium make);
-			double Area() const;
+	public:
+		RectangularBoard(float width, float height, Medium make);
+		double Area() const;
+	private:
+		float length, breadth;
+	};
 
-		private:
-			float radius;	
+	class CircularBoard : public virtual Signboard, public Wasteful
+	{
+	public:	
+		CircularBoard(float diameter, Medium make);
+		double Area() const;
+		double Extra() const;
+	private:
+		float radius;
 	};
 }
+
 
